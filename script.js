@@ -222,7 +222,12 @@ class App {
   _renderWorkout(workout) {
     let html = `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
-    <h2 class="workout__title"></h2>
+    
+    <div class="workout__title--container">
+      <h2 class="workout__title">${workout.description}</h2>
+      <div><i class="fa-solid fa-trash fa-lg"></i></div>
+    </div>
+    
     <div class="workout__details">
       <span class="workout__icon">${
         workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'

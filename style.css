@@ -87,7 +87,6 @@ a:visited {
 .workout__title {
   font-size: 1.7rem;
   font-weight: 600;
-  grid-column: 1 / -1;
 }
 
 .workout__details {
@@ -111,6 +110,18 @@ a:visited {
   color: var(--color-light--1);
   text-transform: uppercase;
   font-weight: 800;
+}
+
+.workout__title--container {
+  grid-column: 1 / -1;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa-solid:hover {
+  color: var(--color-brand--1);
 }
 
 .form {
