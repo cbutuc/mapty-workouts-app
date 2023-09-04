@@ -67,14 +67,17 @@ class App {
   #workouts = [];
 
   constructor() {
+    // Get user position
     this._getPosition();
 
     // Get data from local storage
     this._getLocalStorage();
 
+    // Attach event hadlers
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    containerWorkouts.addEventListener('click', this._removeWorkout.bind(this));
   }
 
   _getPosition() {
@@ -296,6 +299,7 @@ class App {
 
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem('workouts'));
+    console.log('data', data);
 
     if (!data) return;
 
@@ -304,6 +308,26 @@ class App {
     this.#workouts.forEach(work => {
       this._renderWorkout(work);
     });
+  }
+
+  _removeWorkout(e) {
+    const workoutEl = e.target.closest('.workout');
+    const trashCan = e.target.closest('.fa-trash');
+
+    if (!workoutEl || !trashCan) return;
+
+    // Remove from DOM
+    workoutEl.style.opacity = 0;
+    if (trashCan) {
+      setTimeout(() => workoutEl.remove(), 400);
+    }
+
+    // Remove from Local Storage
+    const updateWorkouts = this.#workouts.filter(
+      work => work.id !== workoutEl.dataset.id
+    );
+    this.#workouts = updateWorkouts;
+    this._setLocalStorage();
   }
 
   reset() {
