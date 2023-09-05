@@ -4,6 +4,7 @@
 
   --color-dark--1: #2d3439;
   --color-dark--2: #42484d;
+  --color-dark--3: #d42424;
   --color-light--1: #aaa;
   --color-light--2: #ececec;
   --color-light--3: rgb(214, 222, 224);
@@ -53,6 +54,26 @@ a:visited {
   height: 5.2rem;
   align-self: center;
   margin-bottom: 4rem;
+}
+
+.btn__container {
+  margin: 0 auto;
+}
+
+.btn__reset {
+  font-family: inherit;
+  font-size: 1.5rem;
+  background-color: var(--color-dark--3);
+  color: var(--color-light--3);
+  border: none;
+  border-radius: 3px;
+  padding: 0.3rem 0.6rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.btn__reset.hidden {
+  display: none;
 }
 
 .workouts {

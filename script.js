@@ -59,6 +59,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const deleteAllWorkoutsBtn = document.querySelector('.btn__reset');
 
 class App {
   #map;
@@ -74,11 +75,15 @@ class App {
     // Get data from local storage
     this._getLocalStorage();
 
+    //Show/hide remove all button
+    this._toggleRemoveAllBtn();
+
     // Attach event hadlers
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     containerWorkouts.addEventListener('click', this._removeWorkout.bind(this));
+    deleteAllWorkoutsBtn.addEventListener('click', this.reset);
   }
 
   _getPosition() {
@@ -203,6 +208,9 @@ class App {
 
     // Set local storage to all workouts
     this._setLocalStorage();
+
+    // Show/hide remove all button
+    this._toggleRemoveAllBtn();
   }
 
   _renderWorkoutMarker(workout) {
@@ -282,6 +290,12 @@ class App {
     form.insertAdjacentHTML('afterend', html);
   }
 
+  _toggleRemoveAllBtn() {
+    if (this.#workouts.length) deleteAllWorkoutsBtn.classList.remove('hidden');
+
+    if (!this.#workouts.length) deleteAllWorkoutsBtn.classList.add('hidden');
+  }
+
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
 
@@ -345,6 +359,9 @@ class App {
     // Update markers array
     const markerIndex = this.#markers.indexOf(removedMarker);
     this.#markers.splice(markerIndex, 1);
+
+    // Remove or add Detele All button
+    this._toggleRemoveAllBtn();
   }
 
   reset() {
