@@ -65,6 +65,7 @@ class App {
   #mapZoomLevel = 13;
   #mapEvent;
   #workouts = [];
+  #markers = [];
 
   constructor() {
     // Get user position
@@ -205,7 +206,7 @@ class App {
   }
 
   _renderWorkoutMarker(workout) {
-    L.marker(workout.coords)
+    const marker = L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -220,6 +221,12 @@ class App {
         `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
       )
       .openPopup();
+
+    // Store the markers
+    this.#markers.push(marker);
+
+    // Set workoutId from workout to the marker
+    marker.workoutId = workout.id;
   }
 
   _renderWorkout(workout) {
@@ -323,11 +330,21 @@ class App {
     }
 
     // Remove from Local Storage
-    const updateWorkouts = this.#workouts.filter(
-      work => work.id !== workoutEl.dataset.id
-    );
+    const updateWorkouts = this.#workouts.filter(work => {
+      return work.id !== workoutEl.dataset.id;
+    });
     this.#workouts = updateWorkouts;
     this._setLocalStorage();
+
+    // Remove marker
+    let removedMarker = this.#markers.find(
+      mark => mark.workoutId === workoutEl.dataset.id
+    );
+    this.#map.removeLayer(removedMarker);
+
+    // Update markers array
+    const markerIndex = this.#markers.indexOf(removedMarker);
+    this.#markers.splice(markerIndex, 1);
   }
 
   reset() {
