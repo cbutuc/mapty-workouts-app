@@ -162,6 +162,7 @@ class App {
     const distance = Number(inputDistance.value);
     const duration = Number(inputDuration.value);
     const { lat, lng } = this.#mapEvent.latlng;
+
     let workout;
 
     // If person it's running, create running obj
@@ -192,6 +193,7 @@ class App {
         return alert('Inputs have to be positive numbers!');
 
       workout = new Cycling([lat, lng], distance, duration, elevation);
+      console.log('aici', workout.weather);
     }
 
     // Add new object to the workout array
@@ -245,7 +247,6 @@ class App {
       <h2 class="workout__title">${workout.description}</h2>
       <div><i class="fa-solid fa-trash fa-lg"></i></div>
     </div>
-    
     <div class="workout__details">
       <span class="workout__icon">${
         workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
