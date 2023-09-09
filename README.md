@@ -40,7 +40,7 @@ This application renders workouts based on the user's location.
 
 #### Libraries
 
-- [Leaftlet](https://leafletjs.com/reference.html#layer)
+- [Leaflet](https://leafletjs.com/reference.html#layer)
 
 ### Extra features added:
 - Ability to delete all Workouts
